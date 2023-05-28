@@ -1,0 +1,53 @@
+﻿<Window x:Class="MineSweeper.Views.GameView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MineSweeper.Views"
+        mc:Ignorable="d"
+        xmlns:viewModels="clr-namespace:MineSweeper.ViewModels"
+        Background="Lavender"
+        FontFamily="Arial"
+        Title="GameView" Height="Auto" Width="Auto">
+    <Window.DataContext>
+        <viewModels:GameViewModel/>
+    </Window.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="*"/> 
+        </Grid.RowDefinitions>
+        <Menu Grid.Row="0" Height="20" VerticalAlignment="Top">
+            <MenuItem Header="Save" Command="{Binding SaveGameCommand}"/>
+            <MenuItem Header="About" Command="{Binding OpenAboutCommand}"/>
+        </Menu>
+        
+        <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Left">
+            <TextBlock Text="Flag:" FontSize="22" Margin="20,0,0,0"/>
+            <CheckBox IsChecked="{Binding IsFlagChecked}" Margin="10,8,0,0" />
+        </StackPanel>
+        <Button HorizontalAlignment="Center" Grid.Row="0" Margin="0,20,0,0" Command="{Binding ResetGameCommand}">
+            <Image Source="{Binding ResetImage}"/>
+        </Button>
+        <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right">
+            <TextBlock Text="Timer:" FontSize="24" Margin="20,0,0,0"/>
+            <TextBlock Text="{Binding ElapsedTime}" FontSize="24" Margin="0,0,100,0"/>
+        </StackPanel>
+        <ItemsControl ItemsSource="{Binding Board.Grid}" Grid.Row="1" Margin="0,0,0,10">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Columns="{Binding Board.Width}" Rows="{Binding Board.Height}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Button IsEnabled="{Binding IsEnabled}" Command="{Binding DataContext.CellClickedCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}" CommandParameter="{Binding Index}"  Width="40" Height="40" Padding="0" Margin="0">
+                        <Button.Content>
+                            <Image Source="{Binding Image}"/>
+                        </Button.Content>
+                    </Button>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </Grid>
+</Window>

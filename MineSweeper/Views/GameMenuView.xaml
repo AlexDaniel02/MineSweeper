@@ -1,0 +1,42 @@
+﻿<UserControl x:Class="MineSweeper.Views.GameMenuView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MineSweeper.Views" 
+             xmlns:models="clr-namespace:MineSweeper.Models"
+             xmlns:viewModels="clr-namespace:MineSweeper.ViewModels"
+             mc:Ignorable="d"
+             Height="315" Width="560"
+             Background="Lavender"
+             FontFamily="Arial">
+    <UserControl.DataContext>
+        <viewModels:GameMenuViewModel/>
+    </UserControl.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="MineSweeper" FontSize="22" Margin="0,10,10,0" Grid.Row="0" HorizontalAlignment="Center"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="2" Margin="0,30,0,0">
+            <Label Content="Game Difficulty:" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="18" Margin="0,0,10,0" />
+            <ComboBox  Width="200"  SelectedItem="{Binding SelectedDifficulty}">
+                <ComboBox.ItemsSource>
+                    <x:Array Type="{x:Type models:BoardDifficulty}">
+                        <models:BoardDifficulty>Beginner</models:BoardDifficulty>
+                        <models:BoardDifficulty>Intermediate</models:BoardDifficulty>
+                        <models:BoardDifficulty>Expert</models:BoardDifficulty>
+                    </x:Array>
+                </ComboBox.ItemsSource>
+            </ComboBox>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Grid.Row="3"  HorizontalAlignment="Center" >
+            <Button Content="Play" Width="80" Height="30" Margin="0,0,20,0" Command="{Binding StartGameCommand}" Background="SlateBlue"/>
+            <Button Content="Load" Width="80" Height="30" Margin="20,0,0,0" Command="{Binding LoadGameCommand}" Background="SlateBlue"/>
+        </StackPanel>
+
+    </Grid>
+</UserControl>
